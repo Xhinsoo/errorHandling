@@ -1,6 +1,7 @@
 const { Experimental_CssVarsProvider } = require("@mui/material");
 const express = require("express");
 const app = express();
+const AppError = require('./appError')
 
 // app.use((req, res, next) => {
 //   console.log("first middleware");
@@ -15,14 +16,13 @@ const app = express();
 
 // defining our first middleware, it runs first
 
-// const verifyPassword = (req, res, next) => {
-//   const { password } = req.query;
-//   if (password === "chickennugget") {
-//     next(); //if we dont add this, next middleware wont run
-//   }else{
-//     res.send('sorry you need a password')
-//   }
-// };
+const verifyPassword = (req, res, next) => {
+  const { password } = req.query;
+  if (password === "chickennugget") {
+    next(); //if we dont add this, next middleware wont run
+  }
+  throw new AppError('password required', 401)
+}
 app.use((req, res, next) => {
   req.requestTime = Date.now(); //adding method to req. So I have access to request time on every route handler
   console.log(req.method, req.path);
@@ -32,7 +32,7 @@ app.use((req, res, next) => {
 //after verifyPassword, whats next is the (req,res) callback. so it will run.
 //Next() depends on where the middleware is run.
 //protecting route
-app.get("/secret", (req, res) => {
+app.get("/secret", verifyPassword, (req, res) => {
   res.send("sometimes i dress like a carrot and sit on the yard");
 });
 app.get("/", (req, res) => {
