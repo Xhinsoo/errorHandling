@@ -18,6 +18,8 @@ it is a logger. can give us: time logs of user interaction and server responses
 app.use 
 It enables us to load middleware func into Express so that it knows to use it.
 It runs for every incoming req
+We can define error handling routes which will invoke 
+everytime there is am error. instead of express default error handler
 We can use it define 404 route:
     put app.use at the end of file, so if res/req cycle doesn't end, app.use will send 404 not found
 
@@ -27,4 +29,8 @@ app.get(path, callback, [callback])
 this is another way of using app.get, we can add multiple callbacks
 ---
 next() : it will call next middle ware
+
+
 next(err): if we pass anything inside next, express will regard it as being an error and will skip anything non error handling routing and middleware functions.
+
+---
