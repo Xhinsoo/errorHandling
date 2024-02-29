@@ -14,7 +14,7 @@ const AppError = require('./appError')
 //   next();
 // });
 
-// defining our first middleware, it runs first
+// defining our first middleware
 
 const verifyPassword = (req, res, next) => {
   const { password } = req.query;
@@ -23,6 +23,7 @@ const verifyPassword = (req, res, next) => {
   }
   throw new AppError('password required', 401)
 }
+//app.use matches every http inc request and fires back
 app.use((req, res, next) => {
   req.requestTime = Date.now(); //adding method to req. So I have access to request time on every route handler
   console.log(req.method, req.path);
@@ -35,6 +36,7 @@ app.use((req, res, next) => {
 app.get("/secret", verifyPassword, (req, res) => {
   res.send("sometimes i dress like a carrot and sit on the yard");
 });
+
 app.get("/", (req, res) => {
   console.log(`request date: ${req.requestTime}`);
   res.send("hello from home"); //after this, whole req/res cycle stops
