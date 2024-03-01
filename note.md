@@ -50,3 +50,14 @@ we can use this class to throw new error
 throw new AppError("not allowed", "404")
 --
 anytime we are interacting with DB with mongoose, model methods like save, findById, findByBdAndUpdate takes time. These are all async functions and can go wrong.
+
+Anytime we want to throw error from these async route handlers, we will have to use next() middleware.
+
+app.get("/", (req,res,next)=>{
+    if(!product){
+        return next(new AppError("not found","404")) //returns stops rendering of ejs templates
+    }
+    res.render("home")
+})
+next() with value passed in will trigger the next error handler
+---
