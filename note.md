@@ -5,7 +5,7 @@ If we write or use some middleware that does not send a response back to the use
 
 If we are to define custom error handling middleware: we need (err,req,res,next)
 
-and we must specify: next(err) to move it to second error handle. If we do not include err, it will go to normal middle ware
+and we must specify: next(err) to move it to second error handle. If we do not include err, it will go to normal middle ware. Anything passed into next() will be viewed as error and move onto another error handling middleware.
 
 ---
 
