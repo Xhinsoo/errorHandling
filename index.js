@@ -62,7 +62,7 @@ app.use((req, res) => {
 //   // we need to pass err in next() to let default error handling function
 // });
 
-//error handling
+//error handling, placed at last so it can fire after all other functions and middleware
 app.use((err, req, res, next) => {
   const {status,message} = err
   res.status(status).send(message)
